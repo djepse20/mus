@@ -234,7 +234,7 @@ void PutTimeWorkedInStruct(csvValues* csvValue,employees* employee) /* BETA vers
         for(j=0;j<csvValue[0].numberOfShifts;j++) 
         {
             remove_all_chars(csvValue[i].value[j+SHIFTSTART],'-');
-
+            n =0;
             for(k=START_TIME;k<=END_TIME;k++)
             {
 
