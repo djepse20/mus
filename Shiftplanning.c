@@ -4,7 +4,7 @@
 #include <time.h>
 #include <assert.h>
 #include "csv_parser\csv.h"
-
+#define Time_STAMPS 2 /* antall af ti*/
 enum Name{NAME,SHIFTSTART};
 enum Date{YEAR,MONTH,DAY,HOUR,MINUTE};
 enum Time{START_TIME,END_TIME};
@@ -15,20 +15,20 @@ typedef struct csvValues{ /* en sturct der indeholder et af csv values samt anta
     int timeBetweenShifts;
     char** value; 
 }csvValues; 
-typedef struct date{
+typedef struct Timestamp{
     int year[2];
     int month[2];
     int day[2];
     int hour[2];
     int minute[2];
-}date;
+}Timestamp;
 typedef struct shifts{
     int hoursWorked; /*timer der er blevet arbejder ved en given vagt*/
     int minutesWorked; /*minutter arbejder ved en given vagt*/
     char startTimeOfShift[30]; /*start tidspunkt for vagten talt i minutter, ud fra unix tid*/
     char endTimeOfShift[30]; /*slut tidspunkt for vagten talt i minutter, ud fra unix tid*/
     int TotalNumberOfShift; /* gør det nemt at finde det totale antal vagter en person har arbejdet*/
-    date date;
+    Timestamp Timestamp;    
 }shifts;
 
 
@@ -84,7 +84,7 @@ void StartProgram()
 
     employee = AllocateStructs(csvValue);
     employee = LoadIntoStruct(csvValue,employee);
-    printf("%d",employee[0].shift[0].date.hour[1]);
+    printf("%d",employee[0].shift[0].Timestamp.hour[1]);
 }
 
 FILE* OpenCsvFile()
@@ -238,11 +238,11 @@ void PutTimeWorkedInStruct(csvValues* csvValue,employees* employee) /* BETA vers
             for(k=START_TIME;k<=END_TIME;k++)
             {
 
-                sscanf(csvValue[i].value[j+SHIFTSTART]+n,"%d/%d/%d %d.%d%n",&employee[i].shift[j].date.day[k],
-                                                                    &employee[i].shift[j].date.month[k],
-                                                                    &employee[i].shift[j].date.year[k],
-                                                                    &employee[i].shift[j].date.hour[k],
-                                                                    &employee[i].shift[j].date.minute[k],
+                sscanf(csvValue[i].value[j+SHIFTSTART]+n,"%d/%d/%d %d.%d%n",&employee[i].shift[j].Timestamp.day[k],
+                                                                    &employee[i].shift[j].Timestamp.month[k],
+                                                                    &employee[i].shift[j].Timestamp.year[k],
+                                                                    &employee[i].shift[j].Timestamp.hour[k],
+                                                                    &employee[i].shift[j].Timestamp.minute[k],
                                                                     &n
                 );
                 
